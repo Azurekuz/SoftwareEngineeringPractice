@@ -2,9 +2,9 @@ package edu.ithaca.dragon.bank;
 
 public class BankAccount {
 
-    private String email;
-    private double balance;
-    private int userID; //same userID data is used for UserAccounts
+    public String email;
+    public double balance;
+    public int userID; //same userID data is used for UserAccounts
 
     /**
      * @post The constructor of the BankAccount class
