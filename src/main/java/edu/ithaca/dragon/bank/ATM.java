@@ -20,15 +20,15 @@ public class ATM implements BasicAPI {
         return bank.checkBalance(currentAccount.getUserID(), acctId);
 
     }
-    public void withdraw(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+    public void withdraw(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
         bank.withdraw(currentAccount.getUserID(), acctId ,amount);
     }
 
-    public void deposit(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+    public void deposit(int acctId, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
         bank.deposit(currentAccount.getUserID(),acctId,amount);
     }
 
-    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException{
+    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
         bank.transfer(userIDFrom, acctIdToWithdrawFrom, userIDTo, acctIdToDepositTo,amount);
     }
 

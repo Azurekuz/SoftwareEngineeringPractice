@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ATMTest {
 
     @Test //Because ATM just calls central bank's functions mostly, only limited testing needed here - see CentralbankTest
-    void allTests() throws NonExistentAccountException, InsufficientFundsException{
+    void allTests() throws NonExistentAccountException, InsufficientFundsException, FrozenAccountException{
         CentralBank bank = new CentralBank();
         bank.createUser("A", "Password", "a@b.com", 1);
         bank.createBankAccount(1, 100);

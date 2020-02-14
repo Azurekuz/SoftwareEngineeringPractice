@@ -27,7 +27,7 @@ class BankAccountTest {
     }
 
     @Test
-    void withdrawTest() throws InsufficientFundsException{
+    void withdrawTest() throws InsufficientFundsException, FrozenAccountException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         /*
          * Check for proper withdrawal use. Equivalence test.
@@ -182,7 +182,7 @@ class BankAccountTest {
     }
 
     @Test
-    void transferTest() throws IllegalArgumentException, InsufficientFundsException{
+    void transferTest() throws IllegalArgumentException, InsufficientFundsException, FrozenAccountException{
         BankAccount bankAccountA = new BankAccount("a@b.com", 200,1234);
         BankAccount bankAccountB = new BankAccount("a@b.com", 200,1234);
 
@@ -245,7 +245,7 @@ class BankAccountTest {
     }
 
     @Test
-    void depositTest(){
+    void depositTest() throws FrozenAccountException{
         BankAccount bankAccount = new BankAccount("a@b.com", 200,1234);
         bankAccount.deposit(100);
 
@@ -315,7 +315,7 @@ class BankAccountTest {
     }
 
     @Test
-    void CentralBankTest() throws InsufficientFundsException, NonExistentAccountException {
+    void CentralBankTest() throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException {
         CentralBank CentralBank1 = new CentralBank();
         CentralBank CentralBank2 = new CentralBank();
         CentralBank CentralBank3 = new CentralBank();

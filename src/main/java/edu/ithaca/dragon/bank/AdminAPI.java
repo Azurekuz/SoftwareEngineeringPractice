@@ -8,8 +8,8 @@ public interface AdminAPI {
 
     public Collection<Integer> findAcctIdsWithSuspiciousActivity();
 
-    public void freezeAccount(int acctId);
+    public void freezeAccount(int userID, int acctId) throws NonExistentAccountException;
 
-    public void unfreezeAcct(int acctId);
+    public void unfreezeAccount(int userID, int acctId) throws NonExistentAccountException;
 
 }

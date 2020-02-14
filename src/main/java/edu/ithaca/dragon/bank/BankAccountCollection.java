@@ -1,6 +1,8 @@
 package edu.ithaca.dragon.bank;
 import java.util.HashMap;
 import java.util.ArrayList;
+import java.util.Set;
+
 public class BankAccountCollection {
     private HashMap<Integer, ArrayList<BankAccount>> collection;
     BankAccountCollection(){
@@ -37,5 +39,15 @@ public class BankAccountCollection {
 
     int getNumAccounts(int userID){
         return collection.get(userID).size();
+    }
+
+    double sumAll(){
+        double totalSum = 0;
+        for(Integer user: collection.keySet()){
+            for(int bankAccount = 0;bankAccount < collection.get(user).size();bankAccount++){
+                totalSum = totalSum + collection.get(user).get(bankAccount).getBalance();
+            }
+        }
+        return totalSum;
     }
 }
