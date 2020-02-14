@@ -5,6 +5,8 @@ public class BankAccount {
     private String email;
     private double balance;
     private int userID; //same userID data is used for UserAccounts
+    private boolean flagged;
+    private boolean frozen;
 
     /**
      * @post The constructor of the BankAccount class
@@ -63,7 +65,10 @@ public class BankAccount {
      * Allows withdrawals of numeric values with up to two decimal places. Anything beyond is not valid.
      * @throws InsufficientFundsException if there are not enough funds for a given withdrawal.
      */
-    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Illegal amount entered");
         }
@@ -97,7 +102,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if invalid amount is provided.
      * @throws InsufficientFundsException if not enough money is being withdrawn.
      */
-    public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException{
+    public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         withdraw(amount);
         otherAccount.deposit(amount);
     }
@@ -108,7 +116,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if invalid amount is provided. Must be non-negative
      * with only up to two decimal places if they're nonzero.
      */
-    public void deposit(double amount) throws IllegalArgumentException{
+    public void deposit(double amount) throws IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Illegal amount provided");
         }else{
@@ -178,6 +189,10 @@ public class BankAccount {
         return false;
 
 
+    }
+
+    public void setFrozen(boolean isFrozen){
+        frozen = isFrozen;
     }
 
 }

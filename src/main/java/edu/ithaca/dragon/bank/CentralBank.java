@@ -37,23 +37,23 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         return bankAccountCollection.retrieveAccount(userID, acctId).getBalance();
     }
 
-    public void withdraw(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException{
+    public void withdraw(int userId, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
         bankAccountCollection.retrieveAccount(userId, 0).withdraw(amount);
     }
 
-    public void withdraw(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException {
+    public void withdraw(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException {
         bankAccountCollection.retrieveAccount(userId, bankAccID).withdraw(amount);
     }
 
-    public void deposit(int userId, double amount) throws NonExistentAccountException{
+    public void deposit(int userId, double amount) throws NonExistentAccountException, FrozenAccountException{
         bankAccountCollection.retrieveAccount(userId, 0).deposit(amount);
     }
 
-    public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException {
+    public void deposit(int userId, int bankAccID, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException {
         bankAccountCollection.retrieveAccount(userId, bankAccID).deposit(amount);
     }
 
-    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException {
+    public void transfer(int userIDFrom, int acctIdToWithdrawFrom, int userIDTo, int acctIdToDepositTo, double amount) throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException {
         //TODO
         bankAccountCollection.retrieveAccount(userIDFrom, acctIdToWithdrawFrom).transfer(amount,bankAccountCollection.retrieveAccount(userIDTo,acctIdToDepositTo));
     }
@@ -67,6 +67,12 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public void createUser(String userName, String password, String email, int userID){
         userAccounts.addAccount(new UserAccount(userName, password, email, userID));
+    }
+
+    public void createAdministrator(String userName, String password, String email, int userID){
+        Admin newAdmin = new Admin(userName, password, email, userID);
+        newAdmin.setManagedBank(this);
+        userAccounts.addAccount(newAdmin);
     }
 
     public void createBankAccount(int userId, double startingBalance) throws NonExistentAccountException{
@@ -94,19 +100,19 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
     //------------------ AdminAPI methods -------------------------//
 
     public double calcTotalAssets() {
-        return 0;
+        return bankAccountCollection.sumAll();
     }
 
     public Collection<Integer> findAcctIdsWithSuspiciousActivity() {
         return null;
     }
 
-    public void freezeAccount(int userId) {
-
+    public void freezeAccount(int userId, int accID) throws NonExistentAccountException{
+        bankAccountCollection.retrieveAccount(userId, accID).setFrozen(true);
     }
 
-    public void unfreezeAcct(int userId) {
-
+    public void unfreezeAccount(int userId, int accID)  throws NonExistentAccountException{
+        bankAccountCollection.retrieveAccount(userId, accID).setFrozen(false);
     }
 
 }
