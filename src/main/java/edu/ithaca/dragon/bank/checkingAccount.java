@@ -14,5 +14,12 @@ public class checkingAccount extends BankAccount {
     public checkingAccount(String email, double startingBalance, int userID) {
         super(email, startingBalance, userID);
     }
+    public void WithdrawLimit(double amount) throws InsufficientFundsException {
+        if(amount>this.withdrawLimit){
+            throw new InsufficientFundsException("You request exceeded the withdraw limit");
+
+        }
+
+    }
 
 }

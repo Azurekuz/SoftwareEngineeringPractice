@@ -20,4 +20,11 @@ public class savingsAccount extends BankAccount {
         this.balance= this.balance+interest;
 
     }
+    public void WithdrawLimit(double amount) throws InsufficientFundsException {
+        if(amount>this.withdrawLimit){
+            throw new InsufficientFundsException("You request exceeded the withdraw limit");
+
+        }
+
+    }
 }

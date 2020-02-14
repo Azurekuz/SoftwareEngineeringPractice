@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="SoftwareEngineering2-1 - Copy" />
         <module name="EugeneSoftwareEngineeringcode" />
-        <module name="SoftwareEngineeringPractice" />
         <module name="SoftwareEngineering2-1" />
+        <module name="SoftwareEngineeringPractice" />
       </profile>
     </annotationProcessing>
   </component>
