@@ -12,11 +12,12 @@ public class savingsAccount extends BankAccount {
     private boolean flagged =false;
     private boolean frozen =false;
     private double withdrawLimit = balance;
+    public double interest;
     public savingsAccount(String email, double startingBalance, int userID) {
         super(email, startingBalance, userID);
     }
     public  void ApplyInterest(String userId,String email){
-        double interest=this.balance*0.20;
+        double interest=this.balance*this.interest;
         this.balance= this.balance+interest;
 
     }
@@ -26,5 +27,8 @@ public class savingsAccount extends BankAccount {
 
         }
 
+    }
+    public void setInterest(double interestToSet){
+        this.interest=interestToSet;
     }
 }
