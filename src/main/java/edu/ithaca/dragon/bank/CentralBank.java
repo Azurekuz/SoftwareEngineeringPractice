@@ -16,14 +16,21 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     //----------------- BasicAPI methods -------------------------//
 
-    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException {
+    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException, FrozenAccountException {
         try {
             UserAccount account = userAccounts.findAccount(username);
             //If username is wrong it will go to the catch and return false
-            if (account.getPassword().equals(password)) return account;
+            if (account.getPassword().equals(password)){
+                if(account.getFreeze()){
+                    throw new FrozenAccountException("");
+                }
+                return account;
+            }
         }
-        catch(Exception NonExistentAccountException){
+        catch(NonExistentAccountException e){
             throw new NonExistentAccountException("Account not found");
+        }catch(FrozenAccountException e){
+            throw new FrozenAccountException("This User Account is frozen!");
         }
 
 
@@ -118,6 +125,14 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     public void unfreezeAccount(int userId, int accID)  throws NonExistentAccountException{
         bankAccountCollection.retrieveAccount(userId, accID).setFrozen(false);
+    }
+
+    public void freezeUser(int userID) throws NonExistentAccountException {
+        userAccounts.findAccount(userID).setFreeze(true);
+    }
+
+    public void unfreezeUser(int userID) throws NonExistentAccountException{
+        userAccounts.findAccount(userID).setFreeze(false);
     }
 
     public UserAccount searchByUsername(String username) throws NonExistentAccountException{

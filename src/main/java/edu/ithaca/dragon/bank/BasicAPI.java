@@ -3,7 +3,7 @@ package edu.ithaca.dragon.bank;
 //API to be used by ATMs
 public interface BasicAPI {
 
-    UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException;
+    UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException, FrozenAccountException;
 
     double checkBalance(int userID, int acctId) throws NonExistentAccountException;
 

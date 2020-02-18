@@ -12,6 +12,7 @@ public class main {
         ATM testATM = new ATM(testBank);
         ATM_UI testUI = new ATM_UI(testATM);
         //testBank.freezeAccount(0, 0);
+        //testBank.freezeUser(0);
         testUI.initializeATM();
     }
 }

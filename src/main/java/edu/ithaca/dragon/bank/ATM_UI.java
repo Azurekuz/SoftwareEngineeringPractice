@@ -19,11 +19,14 @@ public class ATM_UI {
                 System.out.print("[PASSWORD]> ");
                 String password = userInput.next();
                 confirmCredentials(username, password);
-            }catch(NonExistentAccountException e){
-                System.out.println("[ERROR][Sorry, you've provided the incorrect credentials. \n Please try again.]");
             }catch(InputMismatchException e){
                 System.out.println("[ERROR][Illegal argument provided!");
                 userInput.next();
+            }catch(FrozenAccountException e){
+                promptFrozenAccountError();
+            }catch(NonExistentAccountException e){
+                System.out.println("[ERROR][Either the provided credentials are incorrect \n " +
+                        "or the account does not exist.]");
             }
         }
     }
@@ -308,7 +311,7 @@ public class ATM_UI {
         }
     }
 
-    void confirmCredentials(String username, String password) throws NonExistentAccountException{
+    void confirmCredentials(String username, String password) throws NonExistentAccountException, FrozenAccountException{
         attachedATM.confirmCredentials(username, password);
     }
 

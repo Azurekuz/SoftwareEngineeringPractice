@@ -9,7 +9,7 @@ public class ATM implements BasicAPI {
     public ATM(CentralBank bank){
         this.bank = bank;
     }
-    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException{
+    public UserAccount confirmCredentials(String username, String password) throws NonExistentAccountException, FrozenAccountException{
 
         currentAccount = bank.confirmCredentials(username,password);
         return currentAccount;
