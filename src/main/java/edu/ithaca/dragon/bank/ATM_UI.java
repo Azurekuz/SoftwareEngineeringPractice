@@ -8,13 +8,15 @@ public class ATM_UI {
         attachedATM = (ATM) atm;
     }
 
-
-    void promptLogin(){
+    String promptLogin(){
         while(!attachedATM.isLoggedIn()){
             System.out.println("----------[WELCOME, GUEST]----------");
             System.out.println("Please kindly log in by providing your \n username and password.");
             System.out.print("[USERNAME]> ");
             String username = userInput.next();
+            if(username.equals("%QUIT")){
+                return "%QUIT";
+            }
             try {
                 System.out.print("[PASSWORD]> ");
                 String password = userInput.next();
@@ -29,6 +31,7 @@ public class ATM_UI {
                         "or the account does not exist.]");
             }
         }
+        return "%QUIT";
     }
 
     void promptMainMenu(){
@@ -317,7 +320,10 @@ public class ATM_UI {
 
     void initializeATM(){
         while(true){
-            promptLogin();
+            String console = promptLogin();
+            if(console.equals("%QUIT")){
+                return;
+            }
             promptMainMenu();
         }
     }
