@@ -1,0 +1,103 @@
+COMP 345 - Software Engineering
+Bank practice project - manual test scripts
+Elias, Eugene, Watson
+
+(Setup: Have a function that creates the UI and a central bank with a bunch of preset accounts)
+
+Test user:
+username: "user1"
+password: "pass1"
+email: "a@b.com"
+id: 0
+
+username: "user2"
+password:"pass2"
+email: "c@d.com"
+id: 1
+
+Test bank accounts:
+userid: 0
+balance: 1000
+
+userid: 0
+balance: 5000
+status: FROZEN
+
+/*
+Format:
+Step #. State:
+	a. Instructions
+*/
+
+1. Start up ATM UI
+
+2. Login prompt:
+	a. Enter user1 for username and pass2 for password (incorrect credentials)
+	b. Should have rejection message and re-prompt login
+3. Login prompt:
+	a. Enter user1 for username and pass1 for password (correct credentials)
+	b. Should accept and go to bank account selection screen
+4.BankAccount selection:
+	a. Should display both of user1's accounts and their balances [TODO: NAMES? IDS? TYPE?], plus logout instructions
+	b. Enter 'abcd' - should print unknown command and reprint prompt & commands
+	c. Type 'Logout', which should go back to login screen
+5. Login prompt:
+	a. Enter 'user1' and 'pass2' again to go to user1's bankaccount selection
+6.BankAccount selection:
+	a. Select second account ($5000 bal)
+7.BankAccount:
+	a. Should show list of available actions (Withdraw/Deposit/Transfer) and current balance
+	b. Enter 'abcd' - should print unknown command and reprint prompt & commands
+	c. Enter 'withdraw', but account is frozen so it prevents the action and sends user to frozen account state w/ message
+8.Frozen Account
+	a. Enter 'okay', should go back to BankAccount selection of user1
+9.BankAccount selection:
+	a. Select first account ($1000 bal)
+10. BankAccount:
+	a. Enter 'withdraw'
+11. Withdraw:
+	a. Enter '1000.01' after prompt - should print error (invalid amt > balance)
+	b. Enter 'withdraw' then '10' - should print success confirmation and new balance ($990)
+	c. Enter 'done' - should go back to BankAccount
+12. BankAccount:
+	a. Should display info and balance again ($990)
+	b. Enter 'deposit' 
+13. Deposit:
+	a. Enter '100' after prompt - should print success confirmation and new balance ($1090)
+	b. Enter '10' after prompt - should print success confirm and new balance ($1100)
+	c. Enter 'done' - should go back to BankAccount
+14.BankAccount:
+	a. Should display info and balance again ($1100)
+	b. Enter 'transfer' 
+15. Transfer:
+	a. Enter '100' then [TODO: 2ND BANK ACCOUNT ID?] after prompts - should print success confirmation and new balance ($1000) - transfering to a frozen account is okay
+	b. Enter 'done' - should go back to BankAccount
+16.BankAccount:
+	a. Should display info and balance again ($1000)
+	b. Enter 'withdraw'
+17. Withdraw:
+	a. Enter '1000' - should notice as suspicious activity, freeze the account, and send to frozen acct screen
+18.Frozen Account
+	a. Enter 'okay', should go back to BankAccount selection of user1
+19.BankAccount selection:
+	a.Should display both accounts ($1000 and $5100 balance)
+	b. Select first account ($1000 bal)
+20. BankAccount:
+	a. Should display info and balance again ($1000)
+	b. Enter 'deposit' - should go to frozen account again and show message
+21.Frozen Account
+	a. Enter 'okay', should go back to BankAccount selection of user1
+22.BankAccount selection:
+	a. Enter 'logout'
+23.Login:
+	a.Enter 'user2' then 'pass2'
+24.BankAccount selection
+	a. Should print message about not having any open accounts
+	b. Enter 'logout'
+25.Login
+	a. Enter 'done'
+	b. Program should exit.
+	
+
+	
+	
