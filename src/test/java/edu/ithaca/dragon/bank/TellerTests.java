@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class TellerTests {
 
     @Test
-    public void createCloseAccountTests() throws NonExistentAccountException{
+    public void createCloseAccountTests() throws NonExistentAccountException, FrozenAccountException{
         CentralBank bank = new CentralBank();
 
         Teller teller = new Teller(bank);

@@ -6,6 +6,7 @@ public class UserAccount {
     private String password;
     private String email;
     private int userID;
+    boolean frozen = false;
 
     /**
      * Constructor
@@ -99,5 +100,13 @@ public class UserAccount {
     public String toString() {
         return "UserAccount{" + "username = " + username + ", password = " + password +
                 ", email = " + email + ", userID = " + userID + '}';
+    }
+
+    public void setFreeze(boolean frozen){
+        this.frozen = frozen;
+    }
+
+    public boolean getFreeze(){
+        return frozen;
     }
 }

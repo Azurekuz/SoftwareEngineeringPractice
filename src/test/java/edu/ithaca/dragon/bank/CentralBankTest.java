@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
     @Test
-    void confirmCredentialsTest() throws NonExistentAccountException{
+    void confirmCredentialsTest() throws NonExistentAccountException, FrozenAccountException{
         //TODO add more?
         CentralBank testBank = new CentralBank();
         testBank.createUserAccount("user1","pass1","a@b.com",1);
