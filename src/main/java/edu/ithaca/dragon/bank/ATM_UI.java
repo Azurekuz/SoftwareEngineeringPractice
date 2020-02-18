@@ -23,6 +23,7 @@ public class ATM_UI {
                 System.out.println("[ERROR][Sorry, you've provided the incorrect credentials. \n Please try again.]");
             }catch(InputMismatchException e){
                 System.out.println("[ERROR][Illegal argument provided!");
+                userInput.next();
             }
         }
     }
@@ -31,12 +32,17 @@ public class ATM_UI {
         while(attachedATM.isLoggedIn()){
             int menuChoice = -1;
             System.out.println("----------[WELCOME," + attachedATM.getUsername() + "]----------");
-            System.out.println("-----[TOTAL FUNDS:" + getTotalFunds() +" ]-----");
+            System.out.println("-----[TOTAL FUNDS: $" + getTotalFunds() +" ]-----");
             System.out.println("-----[Available services are as follows]---");
             System.out.println(" [1] Check Balance \n [2] Withdraw \n [3] Deposit \n [4] Transfer \n [5] LOG OUT");
             while(menuChoice < 1 || menuChoice > 4){
                 System.out.print("[CHOOSE]> ");
-                menuChoice = userInput.nextInt();
+                try {
+                    menuChoice = userInput.nextInt();
+                }catch(InputMismatchException e){
+                    System.out.println("[ERROR][Invalid input entered!]");
+                    userInput.next();
+                }
                 switch(menuChoice){
                     case 1:
                         retrieveBankAccounts();
@@ -69,6 +75,9 @@ public class ATM_UI {
                 sum = sum + attachedATM.fetchAccountBalance(i);
             }catch(NonExistentAccountException e){
                 System.out.println("[ERROR][An internal error has occurred.]");
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
             }
         }
         return sum;
@@ -92,7 +101,12 @@ public class ATM_UI {
         double depositAmount = -1;
         while(attachedATM.fetchNumBankAccounts() > 0 && (bankAccount < 0 || bankAccount > attachedATM.fetchNumBankAccounts())){
             System.out.print("[CHOOSE ACCOUNT]>");
-            bankAccount = userInput.nextInt() - 1;
+            try {
+                bankAccount = userInput.nextInt() - 1;
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(bankAccount < 0 || bankAccount > attachedATM.fetchNumBankAccounts()){
                 System.out.println("[ERROR][Invalid account id entered!]");
                 return;
@@ -104,6 +118,7 @@ public class ATM_UI {
             System.out.println("[ERROR][An internal error has occurred.]");
         }catch(InputMismatchException e){
             System.out.println("[ERROR][Illegal argument provided!");
+            userInput.next();
         }
 
         try {
@@ -122,6 +137,7 @@ public class ATM_UI {
             System.out.println("[ERROR][An internal error has occurred.]");
         }catch(InputMismatchException e){
             System.out.println("[ERROR][Illegal argument provided!");
+            userInput.next();
         }
     }
 
@@ -132,7 +148,12 @@ public class ATM_UI {
         System.out.println("[1][User][Transfers within one's own account)");
         System.out.println("[2][Internal][Transfers to another account within this bank)");
         while(menuChoice < 1 || menuChoice > 2){
-            menuChoice = userInput.nextInt();
+            try {
+                menuChoice = userInput.nextInt();
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(menuChoice < 1 || menuChoice > 2){
                 System.out.println("[ERROR][Invalid argument provided!]");
             }
@@ -157,7 +178,12 @@ public class ATM_UI {
         double transferAmount = -1;
         while(attachedATM.fetchNumBankAccounts() > 0 && (bankAccountA < 0 || bankAccountA > attachedATM.fetchNumBankAccounts())){
             System.out.print("[CHOOSE ACCOUNT FROM]>");
-            bankAccountA = userInput.nextInt() - 1;
+            try {
+                bankAccountA = userInput.nextInt() - 1;
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(bankAccountA < 0 || bankAccountA > attachedATM.fetchNumBankAccounts()){
                 System.out.println("[ERROR][Invalid account id entered!]");
                 return;
@@ -165,7 +191,12 @@ public class ATM_UI {
         }
         while(attachedATM.fetchNumBankAccounts() > 0 && (bankAccountB < 0 || bankAccountB > attachedATM.fetchNumBankAccounts())){
             System.out.print("[CHOOSE ACCOUNT TO][" + (bankAccountA + 1) + ">>> ?)>");
-            bankAccountB = userInput.nextInt() - 1;
+            try {
+                bankAccountB = userInput.nextInt() - 1;
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(bankAccountB < 0 || bankAccountB > attachedATM.fetchNumBankAccounts()){
                 System.out.println("[ERROR][Invalid account id entered!]");
                 return;
@@ -187,6 +218,9 @@ public class ATM_UI {
             System.out.println("[ERROR][We're sorry but this bank account has been frozen. \n" +
                     "Please contact customer service at 1-888-555-1212. \n" +
                     "We're sorry for the inconvenience.]");
+        }catch(InputMismatchException e){
+            System.out.println("[ERROR][Invalid input entered!]");
+            userInput.next();
         }
     }
 
@@ -196,7 +230,12 @@ public class ATM_UI {
         double transferAmount = -1;
         while(attachedATM.fetchNumBankAccounts() > 0 && (bankAccountA < 0 || bankAccountA > attachedATM.fetchNumBankAccounts())){
             System.out.print("[CHOOSE ACCOUNT FROM]>");
-            bankAccountA = userInput.nextInt() - 1;
+            try {
+                bankAccountA = userInput.nextInt() - 1;
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(bankAccountA < 0 || bankAccountA > attachedATM.fetchNumBankAccounts()){
                 System.out.println("[ERROR][Invalid account id entered!]");
                 return;
@@ -217,6 +256,9 @@ public class ATM_UI {
             System.out.println("[ERROR][We're sorry but one of the bank accounts has been frozen. \n" +
                     "If it is yours then please contact customer service at 1-888-555-1212. \n" +
                     "We're sorry for the inconvenience.]");
+        }catch(InputMismatchException e){
+            System.out.println("[ERROR][Invalid input entered!]");
+            userInput.next();
         }
     }
 
@@ -227,7 +269,12 @@ public class ATM_UI {
         double withdrawAmount = -1;
         while(attachedATM.fetchNumBankAccounts() > 0 && (bankAccount < 0 || bankAccount > attachedATM.fetchNumBankAccounts())){
             System.out.print("[CHOOSE ACCOUNT]>");
-            bankAccount = userInput.nextInt() - 1;
+            try {
+                bankAccount = userInput.nextInt() - 1;
+            }catch(InputMismatchException e){
+                System.out.println("[ERROR][Invalid input entered!]");
+                userInput.next();
+            }
             if(bankAccount < 0 || bankAccount > attachedATM.fetchNumBankAccounts()){
                 System.out.println("[ERROR][Invalid account id entered!]");
                 return;
@@ -239,6 +286,7 @@ public class ATM_UI {
             System.out.println("[ERROR][An internal error has occurred.]");
         }catch(InputMismatchException e){
             System.out.println("[ERROR][Illegal argument provided!");
+            userInput.next();
         }
         try {
             System.out.print("[WITHDRAW]> ");
@@ -256,6 +304,7 @@ public class ATM_UI {
             System.out.println("[ERROR][An internal error has occurred.]");
         }catch(InputMismatchException e){
             System.out.println("[ERROR][Illegal argument provided!");
+            userInput.next();
         }
     }
 
