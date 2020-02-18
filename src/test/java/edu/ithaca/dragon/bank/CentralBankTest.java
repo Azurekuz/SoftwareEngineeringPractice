@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class CentralBankTest {
     @Test
-    void confirmCredentialsTest() throws NonExistentAccountException{
+    void confirmCredentialsTest() throws NonExistentAccountException, FrozenAccountException{
         //TODO add more?
         CentralBank testBank = new CentralBank();
         testBank.createUserAccount("user1","pass1","a@b.com",1);
@@ -37,7 +37,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void withdrawTest() throws IllegalArgumentException, InsufficientFundsException, NonExistentAccountException{
+    void withdrawTest() throws IllegalArgumentException, InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
         CentralBank testBank = new CentralBank();
         testBank.createUser("A", "Password", "a@b.com", 1);
         testBank.createBankAccount(1, 100);
@@ -69,7 +69,7 @@ public class CentralBankTest {
     }
 
     @Test
-    void depositTest() throws IllegalArgumentException, NonExistentAccountException, InsufficientFundsException{
+    void depositTest() throws IllegalArgumentException, NonExistentAccountException, InsufficientFundsException, FrozenAccountException{
         CentralBank testBank = new CentralBank();
         testBank.createUser("A", "Password", "a@b.com", 1);
         testBank.createBankAccount(1, 100);
@@ -138,12 +138,19 @@ public class CentralBankTest {
     }
 
     @Test
-    void freezeAccountTest() {
+    void freezeAccountTest() throws InsufficientFundsException, NonExistentAccountException, FrozenAccountException{
+        CentralBank testBank = new CentralBank();
+        testBank.createUser("A", "B", "C@D.com", 0);
+        testBank.createBankAccount(0, 100);
 
-    }
+        testBank.withdraw(0,0, 50);
+        assertEquals(50, testBank.checkBalance(0,0));
 
-    @Test
-    void unfreezeAccountTest() {
+        testBank.freezeAccount(0,0);
+        assertThrows(FrozenAccountException.class, ()->testBank.withdraw(0,0, 50));
 
+        testBank.unfreezeAccount(0,0);
+        testBank.withdraw(0,0, 50);
+        assertEquals(0, testBank.checkBalance(0,0));
     }
 }

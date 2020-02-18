@@ -10,6 +10,8 @@ public class BankAccount {
     private int userID; //same userID data is used for UserAccounts
     //public String TransactionHistory;
     public ArrayList<String>  TransactionHistory = new ArrayList<String>() ;
+    private boolean flagged;
+    private boolean frozen;
 
     /**
      * @post The constructor of the BankAccount class
@@ -68,7 +70,10 @@ public class BankAccount {
      * Allows withdrawals of numeric values with up to two decimal places. Anything beyond is not valid.
      * @throws InsufficientFundsException if there are not enough funds for a given withdrawal.
      */
-    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException{
+    public void withdraw (double amount) throws InsufficientFundsException, IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Illegal amount entered");
         }
@@ -104,7 +109,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if invalid amount is provided.
      * @throws InsufficientFundsException if not enough money is being withdrawn.
      */
-    public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException{
+    public void transfer(double amount, BankAccount otherAccount) throws InsufficientFundsException, IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         withdraw(amount);
         otherAccount.deposit(amount);
         String transaction ="transfer";
@@ -117,7 +125,10 @@ public class BankAccount {
      * @throws IllegalArgumentException if invalid amount is provided. Must be non-negative
      * with only up to two decimal places if they're nonzero.
      */
-    public void deposit(double amount) throws IllegalArgumentException{
+    public void deposit(double amount) throws IllegalArgumentException, FrozenAccountException{
+        if(frozen){
+            throw new FrozenAccountException("This account is currently frozen");
+        }
         if(!isAmountValid(amount)){
             throw new IllegalArgumentException("Illegal amount provided");
         }else{
@@ -196,11 +207,8 @@ public class BankAccount {
         //int j=1;
         String recordTransaction = transaction+" "+amount1;
         TransactionHistory.add(recordTransaction);
-
-
-
-
     }
+  
     public String getTransactionHistory(String email, int userID,String transactionToFind) {
         if (email==this.email && userID==this.userID){
             return TransactionHistory.get(TransactionHistory.indexOf(transactionToFind));
@@ -210,4 +218,9 @@ public class BankAccount {
         //return TransactionHistory;
         return null;
     }
+  
+    public void setFrozen(boolean isFrozen){
+        frozen = isFrozen;
+    }
+
 }
