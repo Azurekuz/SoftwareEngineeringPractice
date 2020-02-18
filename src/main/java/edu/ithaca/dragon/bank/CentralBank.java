@@ -1,5 +1,6 @@
 package edu.ithaca.dragon.bank;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class CentralBank implements AdvancedAPI, AdminAPI {
@@ -96,6 +97,10 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
 
     }
 
+    public int fetchNumBankAccounts(int userID){
+        return bankAccountCollection.getNumAccounts(userID);
+    }
+
 
     //------------------ AdminAPI methods -------------------------//
 
@@ -115,4 +120,7 @@ public class CentralBank implements AdvancedAPI, AdminAPI {
         bankAccountCollection.retrieveAccount(userId, accID).setFrozen(false);
     }
 
+    public UserAccount searchByUsername(String username) throws NonExistentAccountException{
+        return userAccounts.findAccount(username);
+    }
 }
